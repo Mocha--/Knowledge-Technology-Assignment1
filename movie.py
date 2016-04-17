@@ -14,6 +14,7 @@ class Review:
 
     def findFilmTitle(self):
         for filmTitle in self.filmTitles:
+            print(filmTitle.text)
             self._initMatrix(filmTitle.text)
             self._fillMatrix(filmTitle.text)
             minDistance = min(self.matrix[-1])
@@ -39,7 +40,7 @@ class Review:
             for j in range(len(self.text)):
                 upDown = self.matrix[i][j + 1] + 1
                 leftRight = self.matrix[i + 1][j] + 1
-                diagonal = self.matrix[i][j] if self.text[j] == filmTitle[i] else self.matrix[i][j] + 1
+                diagonal = self.matrix[i][j] if self.text[j].lower() == filmTitle[i].lower() else self.matrix[i][j] + 1
                 self.matrix[i + 1][j + 1] = min(upDown, leftRight, diagonal)
 
 if __name__ == '__main__':
@@ -51,6 +52,7 @@ if __name__ == '__main__':
             break
         filmTitles.append(FilmTitle(title))
     f.close()
+    resultFile = open('result.txt', 'w')
     print(len(filmTitles))
 
     reviewFileNames = os.listdir(os.getcwd() + '/revs')
@@ -64,4 +66,4 @@ if __name__ == '__main__':
             text += line
         review = Review(text, filmTitles)
         res = review.findFilmTitle()
-        print(res)
+        resultFile.write(str(res))
