@@ -18,7 +18,6 @@ class Review:
     # find film title
     def findFilmTitle(self):
         for filmTitle in self.filmTitles:
-            print(filmTitle.text)
             self._initMatrix(filmTitle.text)
             self._fillMatrix(filmTitle.text)
             minDistance = min(self.matrix[-1])
@@ -83,5 +82,6 @@ if __name__ == '__main__':
             text += line
         review = Review(text, filmTitles)
         res = review.findFilmTitle()
+	print(fileName + ' film title : ' + str(res))
         resultFile.write(fileName + ' film title : ' + str(res))
     resultFile.close()
